@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Corona Cases</title>
+</head>
+
+<body>
+<div class="d-flex text-center my-5 justify-content-center">
+    <h1>
+        Corona Cases
+    </h1>
+    
+</div>
+<div class="d-flex text-center my-5 justify-content-center">
+    <p class="text-muted"> 
+        A Website By Arbaz To Learn FetchApi
+    </p>
+    
+</div>
+
+    <div class="d-flex text-center my-5 justify-content-center">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="https://source.unsplash.com/400x300/?Virus,medicine" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title" id="c_name">Card title</h5>
+                <p class="card-text" id="con_cases" ></p>
+                <p class="card-text" id="rec_cases" ></p>
+                <p class="card-text" id="deaths" ></p>
+                <a id="next" class="btn btn-primary">Other Country</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+
+    <!-- myscript -->
+    <script>
+        let pro=prompt("Enter The Country Name To Get Covid Cases Stats");
+        pro=pro[0].toUpperCase()+pro.slice(1);
+        
+        let next=document.getElementById("next")
+        let c_name= document.getElementById("c_name");
+        let con_cases= document.getElementById("con_cases");
+        let rec_cases= document.getElementById("rec_cases");
+        let deaths= document.getElementById("deaths");
+
+        next.onclick=()=>{
+            location.reload();
+            return false;
+        }
+
+        c_name.innerHTML=`Cases in  ${pro}`
+        
+
+
+        fetch('https://api.covid19api.com/summary').then((apidata) => {
+        return apidata.json();
+        }).then((actualdata) => {
+            for (i in actualdata.Countries){
+                if(actualdata.Countries[i].Country==`${pro}`){
+                    con_cases.innerHTML=`Recent No. of Confirmed Cases in ${pro} = ${actualdata.Countries[i].NewConfirmed}`
+                    rec_cases.innerHTML=`Recent No. of Recovered Cases in ${pro} = ${actualdata.Countries[i].NewRecovered}`
+                    deaths.innerHTML=`Recent No. of Deaths in ${pro} = ${actualdata.Countries[i].NewDeaths}`
+                }
+            }
+        });
+
+    </script>
+   
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
